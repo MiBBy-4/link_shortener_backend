@@ -12,6 +12,7 @@ class Api::V1::LinksController < ApplicationController
 
   def create
     @link = Link.new(link_params)
+    @link.shorted_link = generate_shorted_link
     if @link.save
       render json: {
         status: 201,
@@ -42,11 +43,16 @@ class Api::V1::LinksController < ApplicationController
 
   private
 
+  def generate_shorted_link
+    charset = Array('A'..'Z') + Array('a'..'z')
+    Array.new(rand(4..25)) { charset.sample }.join
+  end
+
   def set_link
     @link = Link.find(params[:id])
   end
 
-  def idea_params
+  def link_params
     params.require(:link).permit(:base_link)
   end
 end
