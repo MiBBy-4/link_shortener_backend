@@ -5,6 +5,8 @@ Rails.application.routes.draw do
       resources :links
     end
   end
+
+  get '/:link', to: 'redirect#shorted_link'
   # Defines the root path route ("/")
   # root "articles#index"
 end
