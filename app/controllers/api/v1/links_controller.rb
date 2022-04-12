@@ -3,16 +3,17 @@ class Api::V1::LinksController < ApplicationController
 
   def index
     @links = Link.all
-    render json: @links.to_json
+    render json: @links.to_json(include: [:user])
   end
 
   def show
-    render json: @link.to_json
+    render json: @link.to_json(include: [:user])
   end
 
   def create
     @link = Link.new(link_params)
     @link.shorted_link = generate_shorted_link
+    @link.user_id = session[:user_id]
     if @link.save
       render json: {
         status: 201,
