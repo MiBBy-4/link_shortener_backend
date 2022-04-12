@@ -1,5 +1,4 @@
 class Users::RegistrationsController < ApplicationController
-
   def create
     user = User.new(
       email: params['user']['email'],
