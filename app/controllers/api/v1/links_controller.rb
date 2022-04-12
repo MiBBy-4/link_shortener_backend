@@ -45,7 +45,7 @@ class Api::V1::LinksController < ApplicationController
 
   def generate_shorted_link
     charset = Array('A'..'Z') + Array('a'..'z')
-    Array.new(rand(4..25)) { charset.sample }.join
+    Array.new(rand(4..15)) { charset.sample }.join
   end
 
   def set_link
@@ -53,6 +53,6 @@ class Api::V1::LinksController < ApplicationController
   end
 
   def link_params
-    params.require(:link).permit(:base_link)
+    params.require(:link).permit(:base_link, :description)
   end
 end
