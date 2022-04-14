@@ -3,11 +3,11 @@ class Api::V1::LinksController < ApplicationController
 
   def index
     @links = Link.all
-    render json: @links.to_json(include: [:user])
+    render json: @links.to_json(include: [:user, :tags])
   end
 
   def show
-    render json: @link.to_json(include: [:user])
+    render json: @link.to_json(include: [:user, :tags])
   end
 
   def create
