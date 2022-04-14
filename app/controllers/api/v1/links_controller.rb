@@ -15,7 +15,7 @@ class Api::V1::LinksController < ApplicationController
     @link.shorted_link = generate_shorted_link
     @link.user_id = session[:user_id]
     if @link.save
-      tags = tags_params
+      tags = params['tags']
       unless tags.empty?
         tags.each { |tag| @link.tags.create(tag_name: tag, user_id: session[:user_id]) }
       end
@@ -61,9 +61,5 @@ class Api::V1::LinksController < ApplicationController
 
   def link_params
     params.require(:link).permit(:base_link, :description)
-  end
-
-  def tags_params
-    params.require(:tags)
   end
 end
