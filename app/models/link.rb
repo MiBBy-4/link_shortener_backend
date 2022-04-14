@@ -4,4 +4,5 @@ class Link < ApplicationRecord
   validates_associated :user
 
   belongs_to :user
+  has_many :tags, dependent: :delete_all
 end
