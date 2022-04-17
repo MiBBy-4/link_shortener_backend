@@ -1,15 +1,15 @@
 require 'rails_helper'
 
-RSpec.describe 'Links', type: :request do
+RSpec.describe 'LinksController', type: :request do
   describe 'GET /api/v1/links' do
     before do
       FactoryBot.create(:user)
-      FactoryBot.create_list(:link, 15)
+      FactoryBot.create_list(:link, 5)
       get '/api/v1/links'
     end
 
     it 'return all link with json' do
-      expect(json.size).to eq(15)
+      expect(json.size).to eq(5)
     end
 
     it 'return success status of response' do
@@ -28,7 +28,9 @@ RSpec.describe 'Links', type: :request do
                             base_link: full_link.base_link,
                             description: full_link.description,
                             user_id: user.id
-                          } }
+                          },
+                           tags: []
+                        }
       end
 
       it 'returns the base link' do

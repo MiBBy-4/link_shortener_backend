@@ -13,7 +13,6 @@ class Api::V1::LinksController < ApplicationController
   def create
     @link = Link.new(link_params)
     @link.shorted_link = generate_shorted_link
-    @link.user_id = session[:user_id]
     if @link.save
       tags = params['tags']
       unless tags.empty?
@@ -60,6 +59,6 @@ class Api::V1::LinksController < ApplicationController
   end
 
   def link_params
-    params.require(:link).permit(:base_link, :description)
+    params.require(:link).permit(:base_link, :description, :user_id)
   end
 end
