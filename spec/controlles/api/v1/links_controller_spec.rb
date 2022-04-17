@@ -49,5 +49,54 @@ RSpec.describe 'LinksController', type: :request do
         expect(json['status']).to eq(201)
       end
     end
+
+    context 'with invalid parameters' do
+      before do
+        post '/api/v1/links', params:
+                          { link: {
+                            name: '',
+                            description: ''
+                          },
+                          tags: []
+                         }
+      end
+
+      it 'returns a unprocessable entity status' do
+        expect(json['status']).to eq(422)
+      end
+    end
+  end
+
+  describe 'PATCH /api/v1/links/:id' do
+    let!(:user) { FactoryBot.create(:user) }
+    let!(:link) { FactoryBot.create(:link) }
+
+    context 'with valid parameters' do
+      let!(:changed_link) { Faker::Internet.url }
+
+      before do
+        patch "/api/v1/links/#{link.id}", params:
+                              { link: {
+                                base_link: changed_link
+                              } }
+      end
+
+      it 'returns an updated name' do
+        expect(json['base_link']).to eq(changed_link)
+      end
+    end
+
+    context 'with invalid parameters' do
+      before do
+        patch "/api/v1/links/#{link.id}", params:
+                              { link: {
+                                base_link: ''
+                              } }
+      end
+
+      it 'returns a bad status' do
+        expect(json['status']).to eq(422)
+      end
+    end
   end
 end
